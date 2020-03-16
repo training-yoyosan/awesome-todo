@@ -8,6 +8,7 @@
         @keydown.enter="alertMessage"
         v-autofocus
         v-bind:class="errorClass"
+        ref="inputElem"
       />
       <button @click="clearMessage">Clear</button>
       <div>{{ message.length }}</div>
@@ -24,7 +25,7 @@
 export default {
   data () {
     return {
-      message: 'I love Vue.js!',
+      message: 'I love Vue.js so much!',
       toggleMessage: false
     }
   },
@@ -55,6 +56,9 @@ export default {
         el.focus()
       }
     }
+  },
+  mounted () {
+    console.log(this.$refs.inputElem)
   }
 }
 </script>
