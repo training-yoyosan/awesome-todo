@@ -77,19 +77,19 @@ export default {
           caption: 'Settings for the Todo app.',
           icon: 'settings',
           link: '/settings'
-        },
-        {
-          title: 'Section 3',
-          caption: 'Section 3 of the course.',
-          icon: 'school',
-          link: '/section3'
-        },
-        {
-          title: 'Section 4',
-          caption: 'Section 4 of the course.',
-          icon: 'code',
-          link: '/section4'
         }
+        // {
+        //   title: 'Section 3',
+        //   caption: 'Section 3 of the course.',
+        //   icon: 'school',
+        //   link: '/section3'
+        // },
+        // {
+        //   title: 'Section 4',
+        //   caption: 'Section 4 of the course.',
+        //   icon: 'code',
+        //   link: '/section4'
+        // }
       ]
     }
   }
