@@ -1,7 +1,23 @@
-export function updateTask ({ commit }, payload) {
+import { uid } from 'quasar'
+
+function updateTask ({ commit }, payload) {
   commit('updateTask', payload)
 }
 
-export function deleteTask ({ commit }, id) {
+function deleteTask ({ commit }, id) {
   commit('deleteTask', id)
+}
+
+function addTask ({ commit }, task) {
+  const payload = {
+    id: uid(),
+    task
+  }
+  commit('addTask', payload)
+}
+
+export {
+  updateTask,
+  deleteTask,
+  addTask
 }

@@ -1,9 +1,19 @@
 import Vue from 'vue'
 
-export function updateTask (state, payload) {
+function updateTask (state, payload) {
   Object.assign(state.tasks[payload.id], payload.updates)
 }
 
-export function deleteTask (state, id) {
+function deleteTask (state, id) {
   Vue.delete(state.tasks, id)
+}
+
+function addTask (state, payload) {
+  Vue.set(state.tasks, payload.id, payload.task)
+}
+
+export {
+  updateTask,
+  deleteTask,
+  addTask
 }
