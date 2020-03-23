@@ -42,7 +42,7 @@
     <q-item-section side>
       <div class="row">
         <q-btn
-          @click.stop="showEditTask = true"
+          @click.stop="showEditTaskModal(true)"
           flat
           round
           color="primary"
@@ -58,18 +58,18 @@
       </div>
     </q-item-section>
 
-    <q-dialog v-model="showEditTask">
+    <q-dialog v-model="editTaskModal">
       <edit-task
         :task="task"
         :id="id"
-        @close="showEditTask = false"
+        @close="showEditTaskModal(false)"
       />
     </q-dialog>
   </q-item>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   props: ['task', 'id'],
@@ -78,8 +78,11 @@ export default {
       showEditTask: false
     }
   },
+  computed: {
+    ...mapGetters('tasks', ['editTaskModal'])
+  },
   methods: {
-    ...mapActions('tasks', ['updateTask', 'deleteTask']),
+    ...mapActions('tasks', ['updateTask', 'deleteTask', 'showEditTaskModal']),
     promptDelete (id) {
       this.$q.dialog({
         title: 'Confirm',

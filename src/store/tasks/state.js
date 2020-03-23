@@ -19,6 +19,8 @@ export default function () {
         dueDate: '2020/03/14',
         dueTime: '15:00'
       }
-    }
+    },
+    showAddTaskModal: false,
+    showEditTaskModal: false
   }
 }

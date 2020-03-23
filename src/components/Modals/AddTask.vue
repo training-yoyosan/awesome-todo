@@ -10,14 +10,14 @@
       <q-card-section class="q-pt-none">
         <modal-task-name
           ref="taskName"
-          :name.sync="taskToAdd.name"
+          :name.sync="taskToSubmit.name"
         />
         <modal-due-date
-          :dueDate.sync="taskToAdd.dueDate"
+          :dueDate.sync="taskToSubmit.dueDate"
         />
         <modal-due-time
-          v-if="taskToAdd.dueDate"
-          :dueTime.sync="taskToAdd.dueTime"
+          v-if="taskToSubmit.dueDate"
+          :dueTime.sync="taskToSubmit.dueTime"
         />
       </q-card-section>
 
