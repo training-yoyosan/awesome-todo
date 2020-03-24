@@ -21,6 +21,7 @@ export default function () {
       }
     },
     showAddTaskModal: false,
-    showEditTaskModal: false
+    showEditTaskModal: false,
+    search: ''
   }
 }

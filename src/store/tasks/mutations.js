@@ -20,10 +20,15 @@ function showEditTaskModal (state, flag) {
   state.showEditTaskModal = flag
 }
 
+function setSearch (state, value) {
+  state.search = value
+}
+
 export {
   updateTask,
   deleteTask,
   addTask,
   showAddTaskModal,
-  showEditTaskModal
+  showEditTaskModal,
+  setSearch
 }

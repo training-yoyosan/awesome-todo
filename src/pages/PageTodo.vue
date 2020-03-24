@@ -1,14 +1,22 @@
 <template>
   <q-page class="q-pa-lg">
 
+    <div class="row q-mb-md">
+      <search />
+    </div>
+
     <no-tasks
-      v-if="!Object.keys(tasksTodo).length"
+      v-if="!Object.keys(tasksTodo).length && !search"
     ></no-tasks>
+
+    <p v-if="search && !Object.keys(tasksCompleted).length && !Object.keys(tasksTodo).length">
+      No search results.
+    </p>
 
     <tasks
       :tasks="tasksTodo"
       bgColor="bg-orange-4"
-      v-else
+      v-if="Object.keys(tasksTodo).length"
     >
       Todo
     </tasks>
@@ -40,11 +48,12 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted', 'addTaskModal'])
+    ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted', 'addTaskModal', 'tasksFiltered']),
+    ...mapState('tasks', ['search'])
   },
   methods: {
     ...mapActions('tasks', ['showAddTaskModal'])
@@ -52,7 +61,8 @@ export default {
   components: {
     'add-task': require('components/Modals/AddTask.vue').default,
     tasks: require('components/Tasks.vue').default,
-    'no-tasks': require('components/Tasks/NoTasks.vue').default
+    'no-tasks': require('components/Tasks/NoTasks.vue').default,
+    search: require('components/Tasks/Tools/Search.vue').default
   }
 }
 </script>

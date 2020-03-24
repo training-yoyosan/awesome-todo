@@ -24,10 +24,15 @@ function showEditTaskModal ({ commit }, flag) {
   commit('showEditTaskModal', flag)
 }
 
+function setSearch ({ commit }, value) {
+  commit('setSearch', value)
+}
+
 export {
   updateTask,
   deleteTask,
   addTask,
   showAddTaskModal,
-  showEditTaskModal
+  showEditTaskModal,
+  setSearch
 }
