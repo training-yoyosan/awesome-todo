@@ -15,7 +15,9 @@
     <q-item-section>
       <q-item-label
         :class="{ 'text-strike': task.completed }"
-      >{{ task.name }}</q-item-label>
+        v-html="$options.filters.searchHighlight(task.name, search)"
+      >
+      </q-item-label>
     </q-item-section>
 
     <q-item-section
@@ -70,7 +72,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import { date } from 'quasar'
 const { formatDate } = date
 
@@ -83,7 +85,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('tasks', ['editTaskModal'])
+    ...mapGetters('tasks', ['editTaskModal']),
+    ...mapState('tasks', ['search'])
   },
   methods: {
     ...mapActions('tasks', ['updateTask', 'deleteTask', 'showEditTaskModal']),
@@ -111,6 +114,16 @@ export default {
   filters: {
     niceDate (value) {
       return formatDate(value, 'MMM D')
+    },
+    searchHighlight (value, search) {
+      if (search) {
+        const searchRegex = new RegExp(search, 'ig')
+        return value.replace(searchRegex, (match) => {
+          return '<span class="bg-yellow-6">' + match + '</span>'
+        })
+      }
+
+      return value
     }
   },
   components: {
