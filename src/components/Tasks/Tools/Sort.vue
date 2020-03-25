@@ -8,7 +8,6 @@
     stack-label
     emit-value
     map-options
-    @input="sortSelect"
   />
 </template>
 

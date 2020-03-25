@@ -3,6 +3,7 @@
     tag="label"
     :class="task.completed ? 'bg-green-1' : 'bg-orange-1'"
     @click="updateTask({ id: id, updates: { completed: !task.completed } })"
+    v-touch-hold:1000.mouse="showTaskModal"
     v-ripple>
     <q-item-section side top>
       <q-checkbox
@@ -42,7 +43,7 @@
     <q-item-section side>
       <div class="row">
         <q-btn
-          @click.stop="showModal = true"
+          @click.stop="showTaskModal"
           flat
           round
           color="primary"
@@ -84,6 +85,9 @@ export default {
   },
   methods: {
     ...mapActions('tasks', ['updateTask', 'deleteTask', 'showEditTaskModal']),
+    showTaskModal () {
+      this.showModal = true
+    },
     promptDelete (id) {
       this.$q.dialog({
         title: 'Confirm',
