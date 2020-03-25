@@ -9,14 +9,20 @@
       ref="name"
       :rules="[val => !!val || 'Field is required']"
       clearable
+      v-select-all
     />
   </div>
 </template>
 
 <script>
+import { selectAll } from 'src/directives/directive-select-all'
+
 export default {
   name: 'ModalTaskName',
-  props: ['name']
+  props: ['name'],
+  directives: {
+    selectAll
+  }
 }
 </script>
 
