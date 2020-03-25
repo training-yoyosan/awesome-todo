@@ -4,7 +4,7 @@ export default function () {
       ID1: {
         name: 'Go to shop',
         completed: false,
-        dueDate: '2020/03/16',
+        dueDate: '2020/03/06',
         dueTime: '09:30'
       },
       ID2: {
@@ -22,6 +22,7 @@ export default function () {
     },
     showAddTaskModal: false,
     showEditTaskModal: false,
-    search: ''
+    search: '',
+    sort: 'name'
   }
 }

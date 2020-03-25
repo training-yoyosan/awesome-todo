@@ -3,6 +3,7 @@
 
     <div class="row q-mb-md">
       <search />
+      <sort />
     </div>
 
     <no-tasks
@@ -52,7 +53,7 @@ import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted', 'addTaskModal', 'tasksFiltered']),
+    ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted', 'addTaskModal']),
     ...mapState('tasks', ['search'])
   },
   methods: {
@@ -62,7 +63,8 @@ export default {
     'add-task': require('components/Modals/AddTask.vue').default,
     tasks: require('components/Tasks.vue').default,
     'no-tasks': require('components/Tasks/NoTasks.vue').default,
-    search: require('components/Tasks/Tools/Search.vue').default
+    search: require('components/Tasks/Tools/Search.vue').default,
+    sort: require('components/Tasks/Tools/Sort.vue').default
   }
 }
 </script>

@@ -9,7 +9,7 @@
       flat
       round
       icon="close"
-      @click="closeModal()"
+      v-close-popup
     ></q-btn>
   </q-card-section>
 </template>

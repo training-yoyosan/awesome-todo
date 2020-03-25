@@ -42,7 +42,7 @@
     <q-item-section side>
       <div class="row">
         <q-btn
-          @click.stop="showEditTaskModal(true)"
+          @click.stop="showModal = true"
           flat
           round
           color="primary"
@@ -58,11 +58,11 @@
       </div>
     </q-item-section>
 
-    <q-dialog v-model="editTaskModal">
+    <q-dialog v-model="showModal">
       <edit-task
         :task="task"
         :id="id"
-        @close="showEditTaskModal(false)"
+        @close="showModal = false"
       />
     </q-dialog>
   </q-item>
@@ -75,7 +75,8 @@ export default {
   props: ['task', 'id'],
   data () {
     return {
-      showEditTask: false
+      showModal: false,
+      selectedId: ''
     }
   },
   computed: {

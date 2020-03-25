@@ -24,11 +24,16 @@ function setSearch (state, value) {
   state.search = value
 }
 
+function setSortBy (state, value) {
+  state.sort = value
+}
+
 export {
   updateTask,
   deleteTask,
   addTask,
   showAddTaskModal,
   showEditTaskModal,
-  setSearch
+  setSearch,
+  setSortBy
 }

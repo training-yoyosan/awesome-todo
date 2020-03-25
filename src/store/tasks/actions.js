@@ -28,11 +28,16 @@ function setSearch ({ commit }, value) {
   commit('setSearch', value)
 }
 
+function setSortBy ({ commit }, value) {
+  commit('setSortBy', value)
+}
+
 export {
   updateTask,
   deleteTask,
   addTask,
   showAddTaskModal,
   showEditTaskModal,
-  setSearch
+  setSearch,
+  setSortBy
 }
