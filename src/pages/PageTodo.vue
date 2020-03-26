@@ -6,30 +6,50 @@
       <sort />
     </div>
 
-    <no-tasks
-      v-if="!Object.keys(tasksTodo).length && !search"
-    ></no-tasks>
+    <div class="relative-position">
+      <transition
+        appear
+        enter-active-class="animated zoomIn"
+        leave-active-class="animated zoomOut absolute-top"
+      >
+        <no-tasks
+          v-if="!Object.keys(tasksTodo).length && !search"
+        ></no-tasks>
+      </transition>
 
-    <p v-if="search && !Object.keys(tasksCompleted).length && !Object.keys(tasksTodo).length">
-      No search results.
-    </p>
+      <p v-if="search && !Object.keys(tasksCompleted).length && !Object.keys(tasksTodo).length">
+        No search results.
+      </p>
 
-    <tasks
-      :tasks="tasksTodo"
-      bgColor="bg-orange-4"
-      v-if="Object.keys(tasksTodo).length"
-    >
-      Todo
-    </tasks>
+      <transition
+        appear
+        enter-active-class="animated zoomIn"
+        leave-active-class="animated zoomOut absolute-top"
+      >
+        <tasks
+          :tasks="tasksTodo"
+          bgColor="bg-orange-4"
+          v-if="Object.keys(tasksTodo).length"
+        >
+          Todo
+        </tasks>
+      </transition>
 
-    <tasks
-      :tasks="tasksCompleted"
-      bgColor="bg-green-4"
-      class="q-mt-lg"
-      v-if="Object.keys(tasksCompleted).length"
-    >
-      Completed
-    </tasks>
+      <transition
+        appear
+        enter-active-class="animated zoomIn"
+        leave-active-class="animated zoomOut"
+      >
+        <tasks
+          :tasks="tasksCompleted"
+          bgColor="bg-green-4"
+          class="q-mt-lg"
+          v-if="Object.keys(tasksCompleted).length"
+        >
+          Completed
+        </tasks>
+      </transition>
+    </div>
 
     <div class="absolute-bottom text-center">
       <q-btn

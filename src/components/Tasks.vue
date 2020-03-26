@@ -6,9 +6,9 @@
       :class="bgColor"
       class="text-white text-center list-header"
     >
-      <span class="text-bold text-subtitle1">
-        <slot></slot>
-      </span>
+        <span class="text-bold text-subtitle1">
+          <slot></slot>
+        </span>
     </q-banner>
     <q-list
       separator
