@@ -1,65 +1,66 @@
 <template>
-  <q-page class="q-pa-lg">
+  <q-page>
+    <div class="q-pa-md absolute full-width full-height column">
+      <div class="row q-mb-md">
+        <search />
+        <sort />
+      </div>
 
-    <div class="row q-mb-md">
-      <search />
-      <sort />
-    </div>
-
-    <div class="relative-position">
-      <transition
-        appear
-        enter-active-class="animated zoomIn"
-        leave-active-class="animated zoomOut absolute-top"
-      >
-        <no-tasks
-          v-if="!Object.keys(tasksTodo).length && !search"
-        ></no-tasks>
-      </transition>
-
-      <p v-if="search && !Object.keys(tasksCompleted).length && !Object.keys(tasksTodo).length">
-        No search results.
-      </p>
-
-      <transition
-        appear
-        enter-active-class="animated zoomIn"
-        leave-active-class="animated zoomOut absolute-top"
-      >
-        <tasks
-          :tasks="tasksTodo"
-          bgColor="bg-orange-4"
-          v-if="Object.keys(tasksTodo).length"
+      <q-scroll-area class="q-scroll-area-tasks">
+        <transition
+          appear
+          enter-active-class="animated zoomIn"
+          leave-active-class="animated zoomOut absolute-top"
         >
-          Todo
-        </tasks>
-      </transition>
+          <no-tasks
+            v-if="!Object.keys(tasksTodo).length && !search"
+          ></no-tasks>
+        </transition>
 
-      <transition
-        appear
-        enter-active-class="animated zoomIn"
-        leave-active-class="animated zoomOut"
-      >
-        <tasks
-          :tasks="tasksCompleted"
-          bgColor="bg-green-4"
-          class="q-mt-lg"
-          v-if="Object.keys(tasksCompleted).length"
+        <p v-if="search && !Object.keys(tasksCompleted).length && !Object.keys(tasksTodo).length">
+          No search results.
+        </p>
+
+        <transition
+          appear
+          enter-active-class="animated zoomIn"
+          leave-active-class="animated zoomOut absolute-top"
         >
-          Completed
-        </tasks>
-      </transition>
-    </div>
+          <tasks
+            :tasks="tasksTodo"
+            bgColor="bg-orange-4"
+            v-if="Object.keys(tasksTodo).length"
+          >
+            Todo
+          </tasks>
+        </transition>
 
-    <div class="absolute-bottom text-center">
-      <q-btn
-        @click="showAddTaskModal(true)"
-        size="24px"
-        round
-        color="primary"
-        icon="add"
-        class="q-mb-lg"
-      />
+        <transition
+          appear
+          enter-active-class="animated zoomIn"
+          leave-active-class="animated zoomOut"
+        >
+          <tasks
+            :tasks="tasksCompleted"
+            bgColor="bg-green-4"
+            class="q-mt-lg q-mb-xl"
+            v-if="Object.keys(tasksCompleted).length"
+          >
+            Completed
+          </tasks>
+        </transition>
+      </q-scroll-area>
+
+      <div class="absolute-bottom text-center">
+        <q-btn
+          @click="showAddTaskModal(true)"
+          size="24px"
+          round
+          color="primary"
+          icon="add"
+          class="q-mb-lg"
+        />
+      </div>
     </div>
 
     <q-dialog v-model="addTaskModal">
@@ -90,4 +91,8 @@ export default {
 </script>
 
 <style>
+.q-scroll-area-tasks {
+  display: flex;
+  flex-grow: 1;
+}
 </style>
