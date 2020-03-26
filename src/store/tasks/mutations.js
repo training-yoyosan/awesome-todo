@@ -12,7 +12,7 @@ function addTask (state, payload) {
   Vue.set(state.tasks, payload.id, payload.task)
 }
 
-function showAddTaskModal (state, flag) {
+function toggleAddTaskModal (state, flag) {
   state.showAddTaskModal = flag
 }
 
@@ -32,7 +32,7 @@ export {
   updateTask,
   deleteTask,
   addTask,
-  showAddTaskModal,
+  toggleAddTaskModal,
   showEditTaskModal,
   setSearch,
   setSortBy

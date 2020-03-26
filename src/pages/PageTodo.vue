@@ -53,7 +53,7 @@
 
       <div class="absolute-bottom text-center no-pointer-events">
         <q-btn
-          @click="showAddTaskModal(true)"
+          @click="toggleAddTaskModal(true)"
           size="24px"
           round
           color="primary"
@@ -64,7 +64,7 @@
     </div>
 
     <q-dialog v-model="addTaskModal">
-      <add-task @close="showAddTaskModal(false)"/>
+      <add-task @close="toggleAddTaskModal(false)"/>
     </q-dialog>
   </q-page>
 </template>
@@ -74,11 +74,19 @@ import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted', 'addTaskModal']),
-    ...mapState('tasks', ['search'])
+    ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
+    ...mapState('tasks', ['search', 'showAddTaskModal']),
+    addTaskModal: {
+      get () {
+        return this.showAddTaskModal
+      },
+      set (value) {
+        this.toggleAddTaskModal(value)
+      }
+    }
   },
   methods: {
-    ...mapActions('tasks', ['showAddTaskModal'])
+    ...mapActions('tasks', ['toggleAddTaskModal'])
   },
   components: {
     'add-task': require('components/Modals/AddTask.vue').default,

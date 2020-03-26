@@ -9,6 +9,7 @@
       flat
       round
       icon="close"
+      @click="closeModal"
       v-close-popup
     ></q-btn>
   </q-card-section>
@@ -20,9 +21,9 @@ import { mapActions } from 'vuex'
 export default {
   name: 'ModalHeader',
   methods: {
-    ...mapActions('tasks', ['showAddTaskModal', 'showEditTaskModal']),
+    ...mapActions('tasks', ['toggleAddTaskModal', 'showEditTaskModal']),
     closeModal () {
-      this.showAddTaskModal(false)
+      this.toggleAddTaskModal(false)
       this.showEditTaskModal(false)
     }
   }

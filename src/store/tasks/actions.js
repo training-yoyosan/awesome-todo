@@ -16,8 +16,8 @@ function addTask ({ commit }, task) {
   commit('addTask', payload)
 }
 
-function showAddTaskModal ({ commit }, flag) {
-  commit('showAddTaskModal', flag)
+function toggleAddTaskModal ({ commit }, flag) {
+  commit('toggleAddTaskModal', flag)
 }
 
 function showEditTaskModal ({ commit }, flag) {
@@ -36,7 +36,7 @@ export {
   updateTask,
   deleteTask,
   addTask,
-  showAddTaskModal,
+  toggleAddTaskModal,
   showEditTaskModal,
   setSearch,
   setSortBy

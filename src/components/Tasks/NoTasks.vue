@@ -13,7 +13,7 @@
         flat
         color="primary"
         label="Add Task"
-        @click="showAddTaskModal(true)"
+        @click="toggleAddTaskModal(true)"
       />
     </template>
   </q-banner>
@@ -26,7 +26,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'NoTasks',
   methods: {
-    ...mapActions('tasks', ['showAddTaskModal'])
+    ...mapActions('tasks', ['toggleAddTaskModal'])
   }
 }
 </script>
