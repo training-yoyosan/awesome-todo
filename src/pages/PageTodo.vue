@@ -51,14 +51,14 @@
         </transition>
       </q-scroll-area>
 
-      <div class="absolute-bottom text-center">
+      <div class="absolute-bottom text-center no-pointer-events">
         <q-btn
           @click="showAddTaskModal(true)"
           size="24px"
           round
           color="primary"
           icon="add"
-          class="q-mb-lg"
+          class="q-mb-lg all-pointer-events"
         />
       </div>
     </div>
