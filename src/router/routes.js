@@ -13,6 +13,10 @@ const routes = [
         component: () => import('pages/PageSettings.vue')
       },
       {
+        path: '/settings/help',
+        component: () => import('pages/PageHelp.vue')
+      },
+      {
         path: '/section3',
         component: () => import('pages/Index.vue')
       },

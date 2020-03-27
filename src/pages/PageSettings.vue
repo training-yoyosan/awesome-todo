@@ -2,7 +2,9 @@
   <q-page padding>
     <q-list
       bordered
-      padding>
+      padding
+      class="q-mb-md"
+    >
       <q-item-label header>Settings</q-item-label>
 
       <q-item
@@ -33,7 +35,29 @@
         </q-item-section>
       </q-item>
     </q-list>
+
+    <q-list
+      bordered
+      padding>
+      <q-item-label header>More</q-item-label>
+
+      <q-item
+        tag="label"
+        v-ripple
+        to="/settings/help"
+      >
+        <q-item-section>
+          <q-item-label>Help</q-item-label>
+        </q-item-section>
+        <q-item-section side>
+          <q-icon
+            name="chevron_right"
+          ></q-icon>
+        </q-item-section>
+      </q-item>
+    </q-list>
   </q-page>
+
 </template>
 
 <script>
