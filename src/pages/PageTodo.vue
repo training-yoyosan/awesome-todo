@@ -13,7 +13,7 @@
           leave-active-class="animated zoomOut absolute-top"
         >
           <no-tasks
-            v-if="!Object.keys(tasksTodo).length && !search"
+            v-if="!Object.keys(tasksTodo).length && !search && ! settings.showTasksInOneList"
           ></no-tasks>
         </transition>
 
@@ -43,7 +43,8 @@
           <tasks
             :tasks="tasksCompleted"
             bgColor="bg-green-4"
-            class="q-mt-lg q-mb-xl"
+            class="q-mb-xl"
+            :class="{ 'q-mt-lg' : ! settings.showTasksInOneList }"
             v-if="Object.keys(tasksCompleted).length"
           >
             Completed
@@ -76,6 +77,7 @@ export default {
   computed: {
     ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
     ...mapState('tasks', ['search', 'showAddTaskModal']),
+    ...mapGetters('settings', ['settings']),
     addTaskModal: {
       get () {
         return this.showAddTaskModal

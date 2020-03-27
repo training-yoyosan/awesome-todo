@@ -5,6 +5,7 @@
       inline-actions
       :class="bgColor"
       class="text-white text-center list-header"
+      v-if="! settings.showTasksInOneList"
     >
         <span class="text-bold text-subtitle1">
           <slot></slot>
@@ -24,9 +25,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'TasksTodo',
   props: ['tasks', 'bgColor'],
+  computed: {
+    ...mapGetters('settings', ['settings'])
+  },
   components: {
     task: require('components/Tasks/Task.vue').default
   }
