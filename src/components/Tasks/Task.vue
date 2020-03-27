@@ -36,7 +36,7 @@
           <q-item-label
             class="row justify-end"
             caption>
-            <small>{{ task.dueTime }}</small>
+            <small>{{ taskDueTime }}</small>
           </q-item-label>
         </div>
       </div>
@@ -86,7 +86,15 @@ export default {
   },
   computed: {
     ...mapGetters('tasks', ['editTaskModal']),
-    ...mapState('tasks', ['search'])
+    ...mapState('tasks', ['search']),
+    ...mapGetters('settings', ['settings']),
+    taskDueTime () {
+      if (this.settings.show12HourTimeFormat) {
+        return formatDate(this.task.dueDate + ' ' + this.task.dueTime, 'h:mm A')
+      }
+
+      return this.task.dueTime
+    }
   },
   methods: {
     ...mapActions('tasks', ['updateTask', 'deleteTask', 'showEditTaskModal']),
