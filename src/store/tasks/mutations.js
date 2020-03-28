@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 function updateTask (state, payload) {
-  Object.assign(state.tasks[payload.id], payload.updates)
+  state.tasks[payload.id] = Object.assign({}, state.tasks[payload.id], payload.updates)
 }
 
 function deleteTask (state, id) {
@@ -10,6 +10,10 @@ function deleteTask (state, id) {
 
 function addTask (state, payload) {
   Vue.set(state.tasks, payload.id, payload.task)
+}
+
+function setTasks (state, tasks) {
+  state.tasks = Object.assign({}, state.tasks, tasks)
 }
 
 function toggleAddTaskModal (state, flag) {
@@ -35,5 +39,6 @@ export {
   toggleAddTaskModal,
   showEditTaskModal,
   setSearch,
-  setSortBy
+  setSortBy,
+  setTasks
 }

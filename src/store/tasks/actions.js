@@ -1,19 +1,37 @@
-import { uid } from 'quasar'
+import { uid, LocalStorage } from 'quasar'
 
-function updateTask ({ commit }, payload) {
+function updateTask ({ commit, dispatch }, payload) {
   commit('updateTask', payload)
+  dispatch('storeTasks')
 }
 
-function deleteTask ({ commit }, id) {
+function deleteTask ({ commit, dispatch }, id) {
   commit('deleteTask', id)
+  dispatch('storeTasks')
 }
 
-function addTask ({ commit }, task) {
+function addTask ({ commit, dispatch }, task) {
   const payload = {
     id: uid(),
     task
   }
   commit('addTask', payload)
+  dispatch('storeTasks')
+}
+
+function storeTasks ({ state }) {
+  console.log('storeTasks')
+  LocalStorage.set('tasks', state.tasks)
+}
+
+function getTasks ({ commit }) {
+  const tasks = LocalStorage.getItem('tasks')
+
+  console.log(tasks)
+
+  if (tasks) {
+    commit('setTasks', tasks)
+  }
 }
 
 function toggleAddTaskModal ({ commit }, flag) {
@@ -39,5 +57,7 @@ export {
   toggleAddTaskModal,
   showEditTaskModal,
   setSearch,
-  setSortBy
+  setSortBy,
+  getTasks,
+  storeTasks
 }
