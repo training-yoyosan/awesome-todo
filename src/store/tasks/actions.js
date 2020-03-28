@@ -20,14 +20,11 @@ function addTask ({ commit, dispatch }, task) {
 }
 
 function storeTasks ({ state }) {
-  console.log('storeTasks')
   LocalStorage.set('tasks', state.tasks)
 }
 
 function getTasks ({ commit }) {
   const tasks = LocalStorage.getItem('tasks')
-
-  console.log(tasks)
 
   if (tasks) {
     commit('setTasks', tasks)
