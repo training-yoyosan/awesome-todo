@@ -6,6 +6,13 @@
           Awesome Todo
         </q-toolbar-title>
 
+        <q-btn
+          to="/auth"
+          flat
+          icon-right="account_circle"
+          class="absolute-right"
+          label="Login"/>
+
       </q-toolbar>
     </q-header>
 
@@ -47,7 +54,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
   </q-layout>
 </template>
@@ -64,7 +71,7 @@ export default {
 
   data () {
     return {
-      leftDrawerOpen: true,
+      leftDrawerOpen: false,
       essentialLinks: [
         {
           title: 'Todo',
