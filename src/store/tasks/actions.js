@@ -1,13 +1,14 @@
-import { uid, LocalStorage } from 'quasar'
+import { uid, LocalStorage, Loading } from 'quasar'
+import { firebaseDb, firebaseAuth } from 'boot/firebase'
 
 function updateTask ({ commit, dispatch }, payload) {
   commit('updateTask', payload)
-  dispatch('storeTasks')
+  // dispatch('storeTasks')
 }
 
 function deleteTask ({ commit, dispatch }, id) {
   commit('deleteTask', id)
-  dispatch('storeTasks')
+  // dispatch('storeTasks')
 }
 
 function addTask ({ commit, dispatch }, task) {
@@ -16,7 +17,7 @@ function addTask ({ commit, dispatch }, task) {
     task
   }
   commit('addTask', payload)
-  dispatch('storeTasks')
+  // dispatch('storeTasks')
 }
 
 function storeTasks ({ state }) {
@@ -47,6 +48,38 @@ function setSortBy ({ commit }, value) {
   commit('setSortBy', value)
 }
 
+function fbReadData ({ commit }) {
+  const uid = firebaseAuth.currentUser.uid,
+    userTasks = firebaseDb.ref('tasks/' + uid)
+
+  userTasks.on('child_added', snapshot => {
+    const task = snapshot.val(),
+      payload = {
+        id: snapshot.key,
+        task
+      }
+
+    commit('addTask', payload)
+  })
+
+  userTasks.on('child_changed', snapshot => {
+    const task = snapshot.val(),
+      payload = {
+        id: snapshot.key,
+        updates: task
+      }
+
+    commit('updateTask', payload)
+  })
+
+  userTasks.on('child_removed', snapshot => {
+    const id = snapshot.key
+    commit('deleteTask', id)
+  })
+
+  Loading.hide()
+}
+
 export {
   updateTask,
   deleteTask,
@@ -56,5 +89,6 @@ export {
   setSearch,
   setSortBy,
   getTasks,
-  storeTasks
+  storeTasks,
+  fbReadData
 }

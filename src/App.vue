@@ -15,7 +15,7 @@ export default {
   },
   mounted () {
     this.getSettings()
-    this.getTasks()
+    // this.getTasks()
     this.handleAuthStateChange()
   }
 }

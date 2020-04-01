@@ -1,5 +1,5 @@
 import { firebaseAuth } from '../../boot/firebase'
-import { LocalStorage } from 'quasar'
+import { Loading, LocalStorage } from 'quasar'
 import { showErrorMessage } from '../../functions/function-show-error-message'
 
 function registerUser ({ commit }, payload) {
@@ -15,6 +15,8 @@ function registerUser ({ commit }, payload) {
 }
 
 function loginUser ({ commit }, payload) {
+  Loading.show()
+
   firebaseAuth.signInWithEmailAndPassword(
     payload.email, payload.password
   )
@@ -30,12 +32,17 @@ function logoutUser () {
   firebaseAuth.signOut()
 }
 
-function handleAuthStateChange ({ commit }) {
+function handleAuthStateChange ({ commit, dispatch }) {
   firebaseAuth.onAuthStateChanged(user => {
     if (user) {
       commit('setLoggedIn', true)
       LocalStorage.set('loggedIn', true)
       this.$router.push('/')
+      dispatch(
+        'tasks/fbReadData',
+        null,
+        { root: true } // allows to trigger an action which is in a different module
+      )
     } else {
       commit('setLoggedIn', false)
       LocalStorage.set('loggedIn', false)
