@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: ['tab'],
   data () {
@@ -64,6 +66,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('auth', ['registerUser', 'loginUser']),
     isValidEmail (email) {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -72,10 +75,10 @@ export default {
     submitForm () {
       switch (this.tab) {
         case 'login':
-          console.log('login user')
+          this.loginUser(this.formData)
           break
         case 'register':
-          console.log('register user')
+          this.registerUser(this.formData)
           break
       }
     }

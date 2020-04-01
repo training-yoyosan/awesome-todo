@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 // we first import the module
 import tasks from './tasks'
 import settings from './settings'
+import auth from './auth'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export default function (/* { ssrContext } */) {
     modules: {
       // then we reference it
       tasks,
-      settings
+      settings,
+      auth
     },
 
     // enable strict mode (adds overhead!)

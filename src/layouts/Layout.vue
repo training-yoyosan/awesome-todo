@@ -7,11 +7,20 @@
         </q-toolbar-title>
 
         <q-btn
+          v-if="!loggedIn"
           to="/auth"
           flat
           icon-right="account_circle"
           class="absolute-right"
           label="Login"/>
+
+        <q-btn
+          v-else
+          @click="logoutUser"
+          flat
+          icon-right="account_circle"
+          class="absolute-right"
+          label="Logout"/>
 
       </q-toolbar>
     </q-header>
@@ -61,9 +70,14 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'MainLayout',
+
+  computed: {
+    ...mapState('auth', ['loggedIn'])
+  },
 
   components: {
     EssentialLink
@@ -85,20 +99,12 @@ export default {
           icon: 'settings',
           link: '/settings'
         }
-        // {
-        //   title: 'Section 3',
-        //   caption: 'Section 3 of the course.',
-        //   icon: 'school',
-        //   link: '/section3'
-        // },
-        // {
-        //   title: 'Section 4',
-        //   caption: 'Section 4 of the course.',
-        //   icon: 'code',
-        //   link: '/section4'
-        // }
       ]
     }
+  },
+
+  methods: {
+    ...mapActions('auth', ['logoutUser'])
   }
 }
 </script>
