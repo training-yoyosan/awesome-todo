@@ -1,23 +1,21 @@
 import { uid, LocalStorage, Loading } from 'quasar'
 import { firebaseDb, firebaseAuth } from 'boot/firebase'
 
-function updateTask ({ commit, dispatch }, payload) {
-  commit('updateTask', payload)
-  // dispatch('storeTasks')
+function updateTask ({ dispatch }, payload) {
+  dispatch('fbUpdateTask', payload)
 }
 
-function deleteTask ({ commit, dispatch }, id) {
-  commit('deleteTask', id)
-  // dispatch('storeTasks')
+function deleteTask ({ dispatch }, id) {
+  dispatch('fbDeleteTask', id)
 }
 
-function addTask ({ commit, dispatch }, task) {
+function addTask ({ dispatch }, task) {
   const payload = {
     id: uid(),
     task
   }
-  commit('addTask', payload)
-  // dispatch('storeTasks')
+
+  dispatch('fbAddTask', payload)
 }
 
 function storeTasks ({ state }) {
@@ -52,6 +50,7 @@ function fbReadData ({ commit }) {
   const uid = firebaseAuth.currentUser.uid,
     userTasks = firebaseDb.ref('tasks/' + uid)
 
+  // listen on new tasks being added
   userTasks.on('child_added', snapshot => {
     const task = snapshot.val(),
       payload = {
@@ -62,6 +61,7 @@ function fbReadData ({ commit }) {
     commit('addTask', payload)
   })
 
+  // listen on tasks being changed
   userTasks.on('child_changed', snapshot => {
     const task = snapshot.val(),
       payload = {
@@ -72,12 +72,34 @@ function fbReadData ({ commit }) {
     commit('updateTask', payload)
   })
 
+  // listen on tasks being deleted
   userTasks.on('child_removed', snapshot => {
     const id = snapshot.key
     commit('deleteTask', id)
   })
 
   Loading.hide()
+}
+
+function fbAddTask ({ commit }, payload) {
+  const uid = firebaseAuth.currentUser.uid,
+    taskRef = firebaseDb.ref('tasks/' + uid + '/' + payload.id)
+
+  taskRef.set(payload.task)
+}
+
+function fbUpdateTask ({ commit }, payload) {
+  const uid = firebaseAuth.currentUser.uid,
+    taskRef = firebaseDb.ref('tasks/' + uid + '/' + payload.id)
+
+  taskRef.update(payload.updates)
+}
+
+function fbDeleteTask ({ commit }, taskId) {
+  const uid = firebaseAuth.currentUser.uid,
+    taskRef = firebaseDb.ref('tasks/' + uid + '/' + taskId)
+
+  taskRef.remove()
 }
 
 export {
@@ -90,5 +112,8 @@ export {
   setSortBy,
   getTasks,
   storeTasks,
-  fbReadData
+  fbReadData,
+  fbAddTask,
+  fbUpdateTask,
+  fbDeleteTask
 }

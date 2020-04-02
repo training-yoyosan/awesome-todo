@@ -33,6 +33,8 @@ function logoutUser () {
 }
 
 function handleAuthStateChange ({ commit, dispatch }) {
+  Loading.show()
+
   firebaseAuth.onAuthStateChanged(user => {
     if (user) {
       commit('setLoggedIn', true)
