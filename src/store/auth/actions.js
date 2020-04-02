@@ -50,6 +50,7 @@ function handleAuthStateChange ({ commit, dispatch }) {
         { root: true } // allows to trigger an action which is in a different module
       )
     } else {
+      commit('tasks/clearTasks', null, { root: true })
       commit('setLoggedIn', false)
       LocalStorage.set('loggedIn', false)
       this.$router.replace('/auth')

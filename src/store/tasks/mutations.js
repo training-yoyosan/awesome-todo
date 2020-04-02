@@ -12,6 +12,10 @@ function addTask (state, payload) {
   Vue.set(state.tasks, payload.id, payload.task)
 }
 
+function clearTasks (state) {
+  state.tasks = {}
+}
+
 function setTasks (state, tasks) {
   state.tasks = Object.assign({}, state.tasks, tasks)
 }
@@ -40,5 +44,6 @@ export {
   showEditTaskModal,
   setSearch,
   setSortBy,
-  setTasks
+  setTasks,
+  clearTasks
 }
