@@ -1,6 +1,18 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header elevated>
+      <q-banner inline-actions class="text-white bg-red">
+        This is a demo application so don't use any sensitive data!
+        <template v-slot:action>
+          <q-btn
+            type="a"
+            icon="fab fa-github-alt"
+            href="https://github.com/training-yoyosan/awesome-todo"
+            target="_blank"
+            color="red"
+            label="Fork me on Github"/>
+        </template>
+      </q-banner>
       <q-toolbar>
         <q-toolbar-title class="absolute-center">
           Awesome Todo

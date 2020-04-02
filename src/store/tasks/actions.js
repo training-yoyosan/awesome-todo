@@ -50,6 +50,10 @@ function fbReadData ({ commit }) {
   const uid = firebaseAuth.currentUser.uid,
     userTasks = firebaseDb.ref('tasks/' + uid)
 
+  userTasks.once('value', snapshot => {
+    Loading.hide()
+  })
+
   // listen on new tasks being added
   userTasks.on('child_added', snapshot => {
     const task = snapshot.val(),
@@ -77,8 +81,6 @@ function fbReadData ({ commit }) {
     const id = snapshot.key
     commit('deleteTask', id)
   })
-
-  Loading.hide()
 }
 
 function fbAddTask ({ commit }, payload) {

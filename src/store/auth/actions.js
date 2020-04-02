@@ -33,13 +33,17 @@ function logoutUser () {
 }
 
 function handleAuthStateChange ({ commit, dispatch }) {
-  Loading.show()
-
   firebaseAuth.onAuthStateChanged(user => {
     if (user) {
+      Loading.show({
+        message: 'Retrieving tasks ...'
+      })
+
       commit('setLoggedIn', true)
       LocalStorage.set('loggedIn', true)
+
       this.$router.push('/')
+
       dispatch(
         'tasks/fbReadData',
         null,
