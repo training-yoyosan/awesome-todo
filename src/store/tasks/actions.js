@@ -69,10 +69,6 @@ function fbReadData ({ commit }) {
       }
 
     commit('addTask', payload)
-  }, error => {
-    if (error) {
-      showErrorMessage(error.message)
-    }
   })
 
   // listen on tasks being changed
@@ -84,20 +80,12 @@ function fbReadData ({ commit }) {
       }
 
     commit('updateTask', payload)
-  }, error => {
-    if (error) {
-      showErrorMessage(error.message)
-    }
   })
 
   // listen on tasks being deleted
   userTasks.on('child_removed', snapshot => {
     const id = snapshot.key
     commit('deleteTask', id)
-  }, error => {
-    if (error) {
-      showErrorMessage(error.message)
-    }
   })
 }
 
