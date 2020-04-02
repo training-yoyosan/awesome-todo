@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeTheme, Menu } from 'electron'
+import { app, BrowserWindow, nativeTheme, Menu, ipcMain } from 'electron'
 import { menuTemplate } from './electron-main-menu-template'
 
 try {
@@ -19,12 +19,15 @@ if (process.env.PROD) {
 export let mainWindow
 const menu = Menu.buildFromTemplate(menuTemplate)
 
+/**
+ * app events
+ */
 app.on('ready', () => {
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    width: 1000,
+    width: 1025,
     height: 600,
     minWidth: 800,
     minHeight: 500,
@@ -52,3 +55,9 @@ app.on('window-all-closed', () => {
   app.quit()
 })
 
+/**
+ * ipc events
+ */
+ipcMain.on('quit-app', () => {
+  app.quit()
+})

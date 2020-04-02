@@ -14,9 +14,9 @@
             href="https://github.com/training-yoyosan/awesome-todo"
             target="_blank"
             color="red"
-            label="Fork me on Github"/>
+            label="Fork me"/>
           <q-btn
-            label="Dismiss"
+            icon="close"
             class="q-ml-sm"
             @click="dismissBanner = true"/>
         </template>
@@ -79,6 +79,23 @@
           :key="link.title"
           v-bind="link"
         />
+
+        <q-item
+          v-if="$q.platform.is.electron"
+          clickable
+          @click="quitApp"
+          class="text-grey-5 absolute-bottom"
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon name="power_settings_new" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Quit</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -125,7 +142,19 @@ export default {
   },
 
   methods: {
-    ...mapActions('auth', ['logoutUser'])
+    ...mapActions('auth', ['logoutUser']),
+    quitApp () {
+      if (this.$q.platform.is.electron) {
+        this.$q.dialog({
+          title: 'Confirm',
+          message: 'Would you like to quit the application?',
+          cancel: true,
+          persistent: true
+        }).onOk(() => {
+          require('electron').ipcRenderer.send('quit-app')
+        })
+      }
+    }
   }
 }
 </script>
