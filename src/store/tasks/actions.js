@@ -1,5 +1,6 @@
 import { uid, LocalStorage, Loading } from 'quasar'
 import { firebaseDb, firebaseAuth } from 'boot/firebase'
+import { showErrorMessage } from '../../functions/function-show-error-message'
 
 function updateTask ({ dispatch }, payload) {
   dispatch('fbUpdateTask', payload)
@@ -50,8 +51,13 @@ function fbReadData ({ commit }) {
   const uid = firebaseAuth.currentUser.uid,
     userTasks = firebaseDb.ref('tasks/' + uid)
 
-  userTasks.once('value', snapshot => {
+  userTasks.once('value', () => {
     Loading.hide()
+  }, error => {
+    if (error) {
+      showErrorMessage(error.message)
+      this.$router.replace('/auth')
+    }
   })
 
   // listen on new tasks being added
@@ -63,6 +69,10 @@ function fbReadData ({ commit }) {
       }
 
     commit('addTask', payload)
+  }, error => {
+    if (error) {
+      showErrorMessage(error.message)
+    }
   })
 
   // listen on tasks being changed
@@ -74,12 +84,20 @@ function fbReadData ({ commit }) {
       }
 
     commit('updateTask', payload)
+  }, error => {
+    if (error) {
+      showErrorMessage(error.message)
+    }
   })
 
   // listen on tasks being deleted
   userTasks.on('child_removed', snapshot => {
     const id = snapshot.key
     commit('deleteTask', id)
+  }, error => {
+    if (error) {
+      showErrorMessage(error.message)
+    }
   })
 }
 
@@ -87,21 +105,33 @@ function fbAddTask ({ commit }, payload) {
   const uid = firebaseAuth.currentUser.uid,
     taskRef = firebaseDb.ref('tasks/' + uid + '/' + payload.id)
 
-  taskRef.set(payload.task)
+  taskRef.set(payload.task, error => {
+    if (error) {
+      showErrorMessage(error.message)
+    }
+  })
 }
 
 function fbUpdateTask ({ commit }, payload) {
   const uid = firebaseAuth.currentUser.uid,
     taskRef = firebaseDb.ref('tasks/' + uid + '/' + payload.id)
 
-  taskRef.update(payload.updates)
+  taskRef.update(payload.updates, error => {
+    if (error) {
+      showErrorMessage(error.message)
+    }
+  })
 }
 
 function fbDeleteTask ({ commit }, taskId) {
   const uid = firebaseAuth.currentUser.uid,
     taskRef = firebaseDb.ref('tasks/' + uid + '/' + taskId)
 
-  taskRef.remove()
+  taskRef.remove(error => {
+    if (error) {
+      showErrorMessage(error.message)
+    }
+  })
 }
 
 export {
