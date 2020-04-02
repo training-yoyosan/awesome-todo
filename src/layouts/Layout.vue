@@ -1,8 +1,12 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header elevated>
-      <q-banner inline-actions class="text-white bg-red">
-        This is a demo application so don't use any sensitive data!
+      <q-banner
+        inline-actions
+        class="text-white bg-red text-center"
+        v-if="!dismissBanner"
+      >
+        <span class="text-subtitle1">This is a public demo application so don't use any sensitive data!</span>
         <template v-slot:action>
           <q-btn
             type="a"
@@ -11,6 +15,10 @@
             target="_blank"
             color="red"
             label="Fork me on Github"/>
+          <q-btn
+            label="Dismiss"
+            class="q-ml-sm"
+            @click="dismissBanner = true"/>
         </template>
       </q-banner>
       <q-toolbar>
@@ -98,6 +106,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
+      dismissBanner: false,
       essentialLinks: [
         {
           title: 'Todo',
