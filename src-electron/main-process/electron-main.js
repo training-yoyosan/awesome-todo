@@ -31,8 +31,11 @@ app.on('ready', () => {
     height: 600,
     minWidth: 800,
     minHeight: 500,
+    center: true,
+    autoHideMenuBar: true,
     useContentSize: true,
     webPreferences: {
+      devTools: false,
       // Change from /quasar.conf.js > electron > nodeIntegration;
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
       nodeIntegration: QUASAR_NODE_INTEGRATION,

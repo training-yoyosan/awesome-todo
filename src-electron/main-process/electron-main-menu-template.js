@@ -68,7 +68,6 @@ export const menuTemplate = [
     submenu: [
       { role: 'reload' },
       { role: 'forcereload' },
-      { role: 'toggledevtools' },
       { type: 'separator' },
       { role: 'resetzoom' },
       { role: 'zoomin' },
@@ -97,10 +96,10 @@ export const menuTemplate = [
     role: 'help',
     submenu: [
       {
-        label: 'Learn More',
+        label: 'About',
         click: async () => {
           const { shell } = require('electron')
-          await shell.openExternal('https://electronjs.org')
+          await shell.openExternal('https://mpalade.ro')
         }
       }
     ]
