@@ -6,7 +6,7 @@
         class="text-white bg-red text-center"
         v-if="!dismissBanner"
       >
-        <span class="text-subtitle1">This is a public demo application so don't use any sensitive data!</span>
+        <span class="text-subtitle2">This is a public demo application so don't use any sensitive data!</span>
         <template v-slot:action>
           <q-btn
             type="a"
