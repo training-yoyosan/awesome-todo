@@ -1,12 +1,12 @@
 <template>
-  <q-form
-    @submit="submitForm">
+  <q-form @submit="submitForm">
     <div class="row q-mb-md">
       <q-banner class="bg-grey-3 col">
         <template v-slot:avatar>
           <q-icon
             name="account_circle"
-            color="primary"/>
+            color="primary"
+          />
         </template>
         {{ tab | capitalize }} in order to access your Todos everywhere!
       </q-banner>
@@ -46,7 +46,8 @@
       <q-btn
         type="submit"
         color="primary"
-        :label="tab | capitalize"/>
+        :label="tab | capitalize"
+      />
     </div>
 
   </q-form>
@@ -60,8 +61,8 @@ export default {
   data () {
     return {
       formData: {
-        email: '',
-        password: ''
+        email: 'gigi@test.com',
+        password: 'parola123'
       }
     }
   },
@@ -94,5 +95,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
