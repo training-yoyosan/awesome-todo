@@ -1,6 +1,6 @@
 {
   "name": "awesome-todo",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Awesome TODO App",
   "productName": "Awesome TODO",
   "cordovaId": "org.cordova.quasar.app",
