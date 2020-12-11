@@ -5,5 +5,5 @@ yarn
 quasar build
 cp .htaccess dist/spa
 cp robots.txt dist/spa
-chown -R mpalade:mpalade .
+chown -R mpalade:nobody .
 chmod -R u+rwX,go+rX,go-w .
