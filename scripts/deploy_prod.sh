@@ -1,5 +1,6 @@
 #!/bin/bash
 
+nvm use
 git pull
 yarn
 quasar build
