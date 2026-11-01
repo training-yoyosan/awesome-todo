@@ -17,7 +17,7 @@
     <h3 v-show="message.length > 4">{{ message }}</h3>
 
     <p>Uppercase message: {{ messageUpperCase }}</p>
-    <p>Lowercase message: {{ message | lowerCase }}</p>
+    <p>Lowercase message: {{ lowerCase(message) }}</p>
   </q-page>
 </template>
 
@@ -43,16 +43,14 @@ export default {
     },
     alertMessage () {
       alert(this.message)
-    }
-  },
-  filters: {
+    },
     lowerCase (value) {
       return value.toLowerCase()
     }
   },
   directives: {
     autofocus: {
-      inserted (el) {
+      mounted (el) {
         el.focus()
       }
     }

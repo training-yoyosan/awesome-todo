@@ -15,7 +15,7 @@
     <q-item-section>
       <q-item-label
         :class="{ 'text-strike': task.completed }"
-        v-html="$options.filters.searchHighlight(task.name, search)"
+        v-html="searchHighlight(task.name, search)"
       >
       </q-item-label>
     </q-item-section>
@@ -31,7 +31,7 @@
           <q-item-label
             class="row justify-end"
             caption>
-            {{ task.dueDate | niceDate }}
+            {{ niceDate(task.dueDate) }}
           </q-item-label>
           <q-item-label
             class="row justify-end"
@@ -117,9 +117,7 @@ export default {
       }).onOk(() => {
         this.deleteTask(id)
       })
-    }
-  },
-  filters: {
+    },
     niceDate (value) {
       return formatDate(value, 'MMM D')
     },

@@ -1,125 +1,127 @@
-import { uid, LocalStorage, Loading } from 'quasar'
-import { firebaseDb, firebaseAuth } from 'boot/firebase'
-import { showErrorMessage } from '../../functions/function-show-error-message'
+import { uid, LocalStorage, Loading } from "quasar";
+import {
+  get,
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+  ref as dbRef,
+  remove,
+  set,
+  update
+} from "firebase/database";
+import { firebaseDb, firebaseAuth } from "boot/firebase";
+import { showErrorMessage } from "../../functions/function-show-error-message";
 
 function updateTask ({ dispatch }, payload) {
-  dispatch('fbUpdateTask', payload)
+  dispatch("fbUpdateTask", payload);
 }
 
 function deleteTask ({ dispatch }, id) {
-  dispatch('fbDeleteTask', id)
+  dispatch("fbDeleteTask", id);
 }
 
 function addTask ({ dispatch }, task) {
   const payload = {
     id: uid(),
     task
-  }
+  };
 
-  dispatch('fbAddTask', payload)
+  dispatch("fbAddTask", payload);
 }
 
 function storeTasks ({ state }) {
-  LocalStorage.set('tasks', state.tasks)
+  LocalStorage.set("tasks", state.tasks);
 }
 
 function getTasks ({ commit }) {
-  const tasks = LocalStorage.getItem('tasks')
+  const tasks = LocalStorage.getItem("tasks");
 
   if (tasks) {
-    commit('setTasks', tasks)
+    commit("setTasks", tasks);
   }
 }
 
 function toggleAddTaskModal ({ commit }, flag) {
-  commit('toggleAddTaskModal', flag)
+  commit("toggleAddTaskModal", flag);
 }
 
 function showEditTaskModal ({ commit }, flag) {
-  commit('showEditTaskModal', flag)
+  commit("showEditTaskModal", flag);
 }
 
 function setSearch ({ commit }, value) {
-  commit('setSearch', value)
+  commit("setSearch", value);
 }
 
 function setSortBy ({ commit }, value) {
-  commit('setSortBy', value)
+  commit("setSortBy", value);
 }
 
 function fbReadData ({ commit }) {
-  const uid = firebaseAuth.currentUser.uid,
-    userTasks = firebaseDb.ref('tasks/' + uid)
+  const uid = firebaseAuth.currentUser.uid;
+  const userTasks = dbRef(firebaseDb, "tasks/" + uid);
 
-  userTasks.once('value', () => {
-    Loading.hide()
-  }, error => {
-    if (error) {
-      showErrorMessage(error.message)
-      this.$router.replace('/auth')
-    }
-  })
+  get(userTasks).then(() => {
+    Loading.hide();
+  }).catch(error => {
+    showErrorMessage(error.message);
+    this.$router.replace("/auth");
+  });
 
   // listen on new tasks being added
-  userTasks.on('child_added', snapshot => {
-    const task = snapshot.val(),
-      payload = {
-        id: snapshot.key,
-        task
-      }
+  onChildAdded(userTasks, snapshot => {
+    const task = snapshot.val();
+    const payload = {
+      id: snapshot.key,
+      task
+    };
 
-    commit('addTask', payload)
-  })
+    commit("addTask", payload);
+  });
 
   // listen on tasks being changed
-  userTasks.on('child_changed', snapshot => {
-    const task = snapshot.val(),
-      payload = {
-        id: snapshot.key,
-        updates: task
-      }
+  onChildChanged(userTasks, snapshot => {
+    const task = snapshot.val();
+    const payload = {
+      id: snapshot.key,
+      updates: task
+    };
 
-    commit('updateTask', payload)
-  })
+    commit("updateTask", payload);
+  });
 
   // listen on tasks being deleted
-  userTasks.on('child_removed', snapshot => {
-    const id = snapshot.key
-    commit('deleteTask', id)
-  })
+  onChildRemoved(userTasks, snapshot => {
+    const id = snapshot.key;
+    commit("deleteTask", id);
+  });
 }
 
 function fbAddTask ({ commit }, payload) {
-  const uid = firebaseAuth.currentUser.uid,
-    taskRef = firebaseDb.ref('tasks/' + uid + '/' + payload.id)
+  const uid = firebaseAuth.currentUser.uid;
+  const taskRef = dbRef(firebaseDb, "tasks/" + uid + "/" + payload.id);
 
-  taskRef.set(payload.task, error => {
-    if (error) {
-      showErrorMessage(error.message)
-    }
-  })
+  set(taskRef, payload.task).catch(error => {
+    showErrorMessage(error.message);
+  });
 }
 
 function fbUpdateTask ({ commit }, payload) {
-  const uid = firebaseAuth.currentUser.uid,
-    taskRef = firebaseDb.ref('tasks/' + uid + '/' + payload.id)
+  const uid = firebaseAuth.currentUser.uid;
+  const taskRef = dbRef(firebaseDb, "tasks/" + uid + "/" + payload.id);
 
-  taskRef.update(payload.updates, error => {
-    if (error) {
-      showErrorMessage(error.message)
-    }
-  })
+  update(taskRef, payload.updates).catch(error => {
+    showErrorMessage(error.message);
+  });
 }
 
 function fbDeleteTask ({ commit }, taskId) {
-  const uid = firebaseAuth.currentUser.uid,
-    taskRef = firebaseDb.ref('tasks/' + uid + '/' + taskId)
+  const uid = firebaseAuth.currentUser.uid;
+  const taskRef = dbRef(firebaseDb, "tasks/" + uid + "/" + taskId);
 
-  taskRef.remove(error => {
-    if (error) {
-      showErrorMessage(error.message)
-    }
-  })
+  remove(taskRef).catch(error => {
+    showErrorMessage(error.message);
+  });
 }
 
 export {

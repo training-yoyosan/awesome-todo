@@ -8,7 +8,7 @@
             color="primary"
           />
         </template>
-        {{ tab | capitalize }} in order to access your Todos everywhere!
+        {{ capitalize(tab) }} in order to access your Todos everywhere!
       </q-banner>
     </div>
 
@@ -46,7 +46,7 @@
       <q-btn
         type="submit"
         color="primary"
-        :label="tab | capitalize"
+        :label="capitalize(tab)"
       />
     </div>
 
@@ -82,10 +82,8 @@ export default {
           this.registerUser(this.formData)
           break
       }
-    }
-  },
-  filters: {
-    capitalize: function (value) {
+    },
+    capitalize (value) {
       if (!value) return ''
       value = value.toString()
       return value.charAt(0).toUpperCase() + value.slice(1)
